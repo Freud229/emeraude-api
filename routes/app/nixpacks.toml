@@ -3,12 +3,11 @@ nixPkgs = ['php82', 'php82Extensions.pdo', 'php82Extensions.pdo_mysql', 'php82Ex
 
 [phases.build]
 cmds = [
-    'composer install --no-dev --optimize-autoloader',
-    'php artisan key:generate',
+    'composer install --optimize-autoloader --no-interaction',
+    'php artisan key:generate --force',
     'php artisan config:cache',
     'php artisan route:cache',
-    'php artisan storage:link',
-    'php artisan migrate --force --seed'
+    'php artisan storage:link'
 ]
 
 [start]
