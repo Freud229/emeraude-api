@@ -1,0 +1,167 @@
+/* ============================================
+   ÉMÉRAUDE OPTIQUE — Design System
+   ============================================ */
+
+:root {
+  /* Palette */
+  --em-green-50:  #ECFDF5;
+  --em-green-100: #D1FAE5;
+  --em-green-500: #10B981;
+  --em-green-600: #059669;
+  --em-green-700: #047857;
+  --em-green-800: #065F46;
+  --em-green-900: #064E3B;
+  --em-white:     #FFFFFF;
+  --em-gray-50:   #F9FAFB;
+  --em-gray-100:  #F3F4F6;
+  --em-gray-200:  #E5E7EB;
+  --em-gray-500:  #6B7280;
+  --em-gray-700:  #374151;
+  --em-gray-900:  #111827;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  /* Spacing */
+  --section-py: clamp(4rem, 8vw, 8rem);
+  --container:  min(1200px, 90vw);
+
+  /* Transitions */
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--em-gray-900);
+  background: var(--em-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+}
+
+/* ============ UTILITIES ============ */
+.container {
+  width: var(--container);
+  margin-inline: auto;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--em-green-900);
+  line-height: 1.15;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--em-gray-500);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: var(--em-green-600);
+  color: var(--em-white);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-primary:hover {
+  background: var(--em-green-700);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border: 1.5px solid var(--em-green-600);
+  color: var(--em-green-600);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+.btn-outline:hover {
+  background: var(--em-green-600);
+  color: var(--em-white);
+  transform: translateY(-1px);
+}
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--em-gray-100); }
+::-webkit-scrollbar-thumb { background: var(--em-green-600); border-radius: 3px; }
+
+/* ============ ANIMATIONS ============ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-up   { animation: fadeUp 0.7s ease both; }
+.animate-fade-in   { animation: fadeIn 0.7s ease both; }
+.animate-slide-left { animation: slideInLeft 0.7s ease both; }
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  :root {
+    --section-py: clamp(3rem, 10vw, 5rem);
+  }
+}

@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Éméraude Optique — Voir le monde autrement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --em-green-50:#ECFDF5;--em-green-100:#D1FAE5;--em-green-500:#10B981;--em-green-600:#059669;
+        --em-green-700:#047857;--em-green-800:#065F46;--em-green-900:#064E3B;--em-white:#FFFFFF;
+        --em-gray-50:#F9FAFB;--em-gray-100:#F3F4F6;--em-gray-200:#E5E7EB;--em-gray-500:#6B7280;
+        --em-gray-700:#374151;--em-gray-900:#111827;
+        --font-display:'Playfair Display',Georgia,serif;--font-body:'Inter',system-ui,sans-serif;
+        --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+      }
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth}
+      body{font-family:var(--font-body);color:var(--em-gray-900);background:var(--em-white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+      img{max-width:100%;display:block}
+      a{text-decoration:none;color:inherit}
+      button{cursor:pointer;border:none;background:none;font-family:var(--font-body)}
+      .container{width:min(1200px,90vw);margin-inline:auto}
+      ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--em-green-600);border-radius:3px}
+      @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+      /* NAVBAR */
+      .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;transition:background .3s,box-shadow .3s}
+      .navbar.solid{background:var(--em-green-900);box-shadow:0 2px 20px rgba(0,0,0,.15)}
+      .navbar.glass{background:rgba(6,78,59,.15);backdrop-filter:blur(12px)}
+      .navbar-inner{display:flex;align-items:center;justify-content:space-between;height:72px;gap:2rem}
+      .nav-logo{display:flex;align-items:center;gap:.65rem}
+      .nav-logo-icon{width:38px;height:38px;background:var(--em-green-600);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+      .nav-logo-main{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:#fff;display:block;line-height:1}
+      .nav-logo-sub{font-size:.6rem;font-weight:600;color:var(--em-green-500);letter-spacing:.22em;display:block}
+      .nav-links{display:flex;align-items:center;gap:2rem}
+      .nav-link{font-size:.875rem;font-weight:500;color:rgba(255,255,255,.8);position:relative;padding-bottom:2px;transition:color var(--transition)}
+      .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--em-green-500);transition:width var(--transition)}
+      .nav-link:hover,.nav-link.active{color:#fff}
+      .nav-link:hover::after,.nav-link.active::after{width:100%}
+      .nav-cta{padding:.55rem 1.4rem;background:var(--em-green-600);color:#fff;font-size:.8rem;font-weight:600;letter-spacing:.04em;border-radius:2px;transition:background var(--transition);cursor:pointer;border:none;font-family:var(--font-body)}
+      .nav-cta:hover{background:var(--em-green-500)}
+      .nav-burger{display:none;color:#fff;background:none;border:none;cursor:pointer;font-size:24px;padding:4px}
+      .nav-mobile{display:none;flex-direction:column;padding:1rem 1.5rem 1.5rem;background:var(--em-green-900);gap:.25rem}
+      .nav-mobile.open{display:flex}
+      .nav-mobile a{padding:.75rem 0;font-size:1rem;font-weight:500;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.08);transition:color var(--transition)}
+      .nav-mobile a:hover{color:var(--em-green-500)}
+      .nav-mobile .nav-cta{margin-top:1rem;text-align:center;padding:.875rem;display:block}
+      @media(max-width:768px){.nav-links{display:none}.nav-cta:not(.mob){display:none}.nav-burger{display:block}}
+
+      /* HERO — IMAGE LUNETTES */
+      .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+      .hero-bg{position:absolute;inset:0}
+      .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center center}
+      /* Dégradé : fort à gauche (texte lisible) → transparent à droite (lunettes visibles) */
+      .hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(6,78,59,.93) 0%,rgba(6,78,59,.78) 40%,rgba(6,78,59,.38) 68%,rgba(0,0,0,.12) 100%)}
+      .hero-content{position:relative;z-index:2;padding-top:8rem;padding-bottom:6rem;max-width:700px}
+      .hero-eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--em-green-500);margin-bottom:1rem;animation:fadeUp .7s ease both}
+      .hero-title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:1.5rem;animation:fadeUp .7s .1s ease both}
+      .hero-word{color:var(--em-green-500);font-style:italic;display:inline-block}
+      .hero-desc{font-size:1.05rem;color:rgba(255,255,255,.82);line-height:1.75;margin-bottom:2.5rem;max-width:540px;animation:fadeUp .7s .2s ease both}
+      .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
+      .btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 2rem;background:var(--em-green-600);color:#fff;font-weight:600;font-size:.9rem;letter-spacing:.04em;border-radius:2px;transition:background var(--transition),transform var(--transition);border:none;font-family:var(--font-body);cursor:pointer}
+      .btn-primary:hover{background:var(--em-green-700);transform:translateY(-1px)}
+      .btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 2rem;border:1.5px solid rgba(255,255,255,.6);color:rgba(255,255,255,.9);font-weight:600;font-size:.9rem;border-radius:2px;transition:all var(--transition);background:none;font-family:var(--font-body);cursor:pointer}
+      .btn-outline:hover{background:rgba(255,255,255,.12);border-color:#fff;color:#fff}
+      .hero-badges{position:absolute;bottom:6rem;right:0;left:0;display:flex;justify-content:flex-end;gap:.75rem;padding-right:calc((100vw - min(1200px,90vw))/2);z-index:2;flex-wrap:wrap;animation:fadeUp .7s .4s ease both}
+      .hero-badge{display:flex;align-items:center;gap:.4rem;padding:.45rem .9rem;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:2px;color:rgba(255,255,255,.9);font-size:.75rem;font-weight:500}
+      .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2;color:rgba(255,255,255,.5);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+      .hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--em-green-500),transparent);animation:pulse 2s ease infinite}
+      @media(max-width:620px){.hero-badges{display:none}}
+
+      /* STATS */
+      .stats{background:var(--em-green-800);padding:2.5rem 0}
+      .stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+      .stat{display:flex;flex-direction:column;align-items:center;text-align:center}
+      .stat-val{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--em-green-500);line-height:1}
+      .stat-label{font-size:.8rem;color:rgba(255,255,255,.7);letter-spacing:.05em;margin-top:.25rem}
+      @media(max-width:768px){.stats-inner{grid-template-columns:repeat(2,1fr);gap:1.5rem}}
+
+      /* SECTIONS */
+      .section{padding:clamp(4rem,8vw,8rem) 0}
+      .section-alt{background:var(--em-gray-50)}
+      .section-hero-bg{padding:10rem 0 5rem;position:relative;overflow:hidden}
+      .section-hero-bg-inner{position:absolute;inset:0;background:linear-gradient(135deg,var(--em-green-900),var(--em-green-700))}
+      .section-hero-bg-content{position:relative;z-index:1}
+      .section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--em-green-900);line-height:1.15}
+      .section-title-white{color:#fff}
+      .section-sub{font-size:.82rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--em-gray-500);margin-bottom:.75rem}
+      .section-sub-green{color:var(--em-green-500)}
+
+      /* CATALOGUE CARDS */
+      .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+      .cat-card{display:flex;flex-direction:column;border-radius:4px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08);transition:transform var(--transition),box-shadow var(--transition);cursor:pointer}
+      .cat-card:hover{transform:translateY(-6px);box-shadow:0 12px 32px rgba(6,95,70,.18)}
+      .cat-card-img-wrap{position:relative;aspect-ratio:4/3;overflow:hidden}
+      .cat-card-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+      .cat-card:hover .cat-card-img{transform:scale(1.06)}
+      .cat-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,78,59,.5),transparent 60%)}
+      .cat-card-count{position:absolute;top:.75rem;right:.75rem;background:var(--em-green-600);color:#fff;font-size:.7rem;font-weight:600;padding:.25rem .6rem;border-radius:1px}
+      .cat-card-body{padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+      .cat-card-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--em-green-900)}
+      .cat-card-desc{font-size:.82rem;color:var(--em-gray-500);line-height:1.6;flex:1}
+      .cat-card-link{display:flex;align-items:center;gap:.35rem;font-size:.8rem;font-weight:600;color:var(--em-green-600);margin-top:.5rem;transition:gap var(--transition)}
+      .cat-card:hover .cat-card-link{gap:.6rem}
+      @media(max-width:960px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+      @media(max-width:560px){.cat-grid{grid-template-columns:1fr}}
+
+      /* BOUTIQUES */
+      .boutiques-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+      .boutique-card{background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07);transition:transform var(--transition),box-shadow var(--transition)}
+      .boutique-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(6,95,70,.15)}
+      .boutique-img-wrap{position:relative;aspect-ratio:16/9;overflow:hidden}
+      .boutique-img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+      .boutique-card:hover .boutique-img{transform:scale(1.05)}
+      .boutique-badge{position:absolute;top:0;left:0;background:var(--em-green-600);color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.08em;padding:.4rem .9rem}
+      .boutique-body{padding:1.5rem}
+      .boutique-ville{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--em-green-900);margin-bottom:.2rem}
+      .boutique-quartier{font-size:.8rem;color:var(--em-green-600);font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1rem}
+      .boutique-info{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.25rem}
+      .boutique-info li{display:flex;align-items:flex-start;gap:.5rem;font-size:.85rem;color:var(--em-gray-700)}
+      .boutique-info span{color:var(--em-green-600);flex-shrink:0;margin-top:1px}
+      .boutique-cta{display:block;text-align:center;padding:.7rem;background:var(--em-green-50);color:var(--em-green-700);font-size:.82rem;font-weight:600;border:1.5px solid var(--em-green-100);border-radius:2px;transition:all var(--transition)}
+      .boutique-cta:hover{background:var(--em-green-600);color:#fff;border-color:var(--em-green-600)}
+      @media(max-width:900px){.boutiques-grid{grid-template-columns:1fr 1fr}}
+      @media(max-width:580px){.boutiques-grid{grid-template-columns:1fr}}
+
+      /* CTA BANNER */
+      .cta-banner{background:var(--em-green-900);padding:4rem 0}
+      .cta-banner-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+      .cta-banner-title{font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);color:#fff;font-weight:700;margin-bottom:.5rem}
+      .cta-banner-sub{color:rgba(255,255,255,.65);font-size:.95rem}
+      .cta-banner-actions{display:flex;align-items:center;gap:1rem;flex-shrink:0;flex-wrap:wrap}
+      .cta-link{color:rgba(255,255,255,.8);font-size:.875rem;font-weight:500;text-decoration:underline;text-underline-offset:3px;transition:color var(--transition)}
+      .cta-link:hover{color:var(--em-green-500)}
+      @media(max-width:680px){.cta-banner-inner{flex-direction:column;text-align:center}.cta-banner-actions{justify-content:center}}
+
+      /* FOOTER */
+      .footer{background:var(--em-green-900);color:rgba(255,255,255,.75);font-size:.875rem}
+      .footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.2fr;gap:3rem;padding:4rem 0 3rem}
+      .footer-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+      .footer-logo-icon{width:36px;height:36px;background:var(--em-green-600);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+      .footer-logo-main{font-family:var(--font-display);font-size:1rem;font-weight:700;color:#fff;display:block}
+      .footer-logo-sub{font-size:.7rem;color:var(--em-green-500);letter-spacing:.05em}
+      .footer-tagline{line-height:1.7;margin-bottom:1.25rem;max-width:280px}
+      .footer-wa{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.25rem;background:#25D366;color:#fff;font-weight:600;font-size:.8rem;border-radius:2px;transition:background var(--transition),transform var(--transition)}
+      .footer-wa:hover{background:#1ebe5a;transform:translateY(-1px)}
+      .footer-heading{font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--em-green-500);margin-bottom:1.25rem}
+      .footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+      .footer-links a{color:rgba(255,255,255,.7);transition:color var(--transition)}
+      .footer-links a:hover{color:var(--em-green-500)}
+      .footer-locs{list-style:none;display:flex;flex-direction:column;gap:.75rem}
+      .footer-locs li{display:flex;align-items:flex-start;gap:.5rem;color:rgba(255,255,255,.7);line-height:1.4}
+      .footer-locs li span.ico{color:var(--em-green-500);flex-shrink:0;margin-top:2px;font-size:14px}
+      .footer-contacts{list-style:none;display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem}
+      .footer-contacts li{display:flex;align-items:center;gap:.5rem}
+      .footer-contacts li span.ico{color:var(--em-green-500);font-size:14px}
+      .footer-contacts a{color:rgba(255,255,255,.7);transition:color var(--transition)}
+      .footer-contacts a:hover{color:var(--em-green-500)}
+      .footer-hours{font-size:.8rem;color:rgba(255,255,255,.45)}
+      .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0;border-top:1px solid rgba(255,255,255,.1);font-size:.8rem;color:rgba(255,255,255,.4)}
+      @media(max-width:960px){.footer-top{grid-template-columns:1fr 1fr;gap:2rem}.footer-brand{grid-column:1/-1}}
+      @media(max-width:560px){.footer-top{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:.5rem;text-align:center}}
+
+      /* CATALOGUE PAGE */
+      .cat-page-body{display:grid;grid-template-columns:230px 1fr;gap:3rem;padding-top:3rem;padding-bottom:4rem;align-items:start}
+      .cat-sidebar{position:sticky;top:90px}
+      .cat-sidebar-title{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--em-gray-500);margin-bottom:1rem}
+      .cat-tab-list{list-style:none;display:flex;flex-direction:column;gap:.25rem}
+      .cat-tab{width:100%;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-radius:3px;font-size:.9rem;font-weight:500;color:var(--em-gray-700);background:transparent;cursor:pointer;border:none;font-family:var(--font-body);transition:background var(--transition),color var(--transition);text-align:left}
+      .cat-tab:hover{background:var(--em-green-50);color:var(--em-green-700)}
+      .cat-tab.active{background:var(--em-green-600);color:#fff}
+      .cat-tab.active .tab-count{background:rgba(255,255,255,.2);color:#fff}
+      .tab-count{background:var(--em-gray-100);color:var(--em-gray-500);font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:20px}
+      .cat-main-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+      .cat-main-title{font-family:var(--font-display);font-size:1.8rem;font-weight:700;color:var(--em-green-900);margin-bottom:.5rem}
+      .cat-main-desc{color:var(--em-gray-500);line-height:1.7;max-width:520px;font-size:.9rem}
+      .cat-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .9rem;background:var(--em-green-50);color:var(--em-green-700);font-size:.78rem;font-weight:600;border-radius:2px;white-space:nowrap}
+      .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+      .photo-card{cursor:pointer}
+      .photo-card-img-wrap{position:relative;aspect-ratio:4/3;border-radius:3px;overflow:hidden;background:var(--em-gray-100)}
+      .photo-card-img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+      .photo-card:hover .photo-card-img{transform:scale(1.05)}
+      .photo-overlay{position:absolute;inset:0;background:rgba(6,78,59,.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--transition)}
+      .photo-card:hover .photo-overlay{opacity:1}
+      .photo-type{position:absolute;top:.6rem;left:.6rem;background:var(--em-green-600);color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.08em;padding:.2rem .5rem;border-radius:1px;text-transform:uppercase}
+      .photo-caption{margin-top:.6rem;font-size:.8rem;color:var(--em-gray-500);line-height:1.4}
+      @media(max-width:900px){.cat-page-body{grid-template-columns:1fr}.cat-sidebar{position:static}.cat-tab-list{flex-direction:row;flex-wrap:wrap}.cat-tab{width:auto;padding:.5rem .875rem}}
+      @media(max-width:560px){.photo-grid{grid-template-columns:repeat(2,1fr)}}
+
+      /* LIGHTBOX */
+      .lightbox{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:2rem;animation:fadeIn .2s ease}
+      .lb-close{position:absolute;top:1.5rem;right:1.5rem;color:#fff;background:rgba(255,255,255,.1);border:none;cursor:pointer;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background var(--transition);font-size:20px}
+      .lb-close:hover{background:rgba(255,255,255,.2)}
+      .lb-inner{max-width:800px;width:100%}
+      .lb-inner img{width:100%;max-height:70vh;object-fit:contain;border-radius:3px}
+      .lb-info{margin-top:1rem;display:flex;align-items:center;gap:.75rem}
+      .lb-type{background:var(--em-green-600);color:#fff;font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:1px;text-transform:uppercase}
+      .lb-caption{color:rgba(255,255,255,.8);font-size:.9rem}
+
+      /* A PROPOS */
+      .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+      .story-img-wrap{position:relative}
+      .story-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px}
+      .story-badge{position:absolute;bottom:-1.5rem;right:-1.5rem;background:var(--em-green-600);color:#fff;padding:1.25rem;border-radius:4px;text-align:center;font-size:.8rem;font-weight:500;box-shadow:0 8px 24px rgba(5,150,105,.4)}
+      .story-badge-num{display:block;font-family:var(--font-display);font-size:2rem;font-weight:700;line-height:1;margin-bottom:.25rem}
+      .story-desc{color:var(--em-gray-500);line-height:1.8;margin-top:1rem}
+      .valeurs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+      .valeur-card{background:#fff;padding:2rem 1.5rem;border-radius:4px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);transition:transform var(--transition),box-shadow var(--transition)}
+      .valeur-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(6,95,70,.12)}
+      .valeur-icon{width:56px;height:56px;background:var(--em-green-100);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--em-green-700);margin:0 auto 1.25rem;font-size:24px}
+      .valeur-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--em-green-900);margin-bottom:.75rem}
+      .valeur-desc{font-size:.85rem;color:var(--em-gray-500);line-height:1.7}
+      @media(max-width:900px){.story-grid{grid-template-columns:1fr}.valeurs-grid{grid-template-columns:1fr 1fr}}
+      @media(max-width:560px){.valeurs-grid{grid-template-columns:1fr}}
+
+      /* CONTACT */
+      .contact-body{display:grid;grid-template-columns:340px 1fr;gap:4rem;padding-top:4rem;padding-bottom:5rem;align-items:start}
+      .contact-info-title{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--em-green-900);margin-bottom:1.75rem}
+      .contact-items{display:flex;flex-direction:column;gap:1.25rem;margin-bottom:1.75rem}
+      .contact-item{display:flex;align-items:flex-start;gap:1rem}
+      .contact-item-icon{width:42px;height:42px;background:var(--em-green-100);color:var(--em-green-700);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+      .contact-item-label{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--em-gray-500);margin-bottom:.2rem}
+      .contact-item-value{font-size:.9rem;color:var(--em-gray-900);font-weight:500}
+      .contact-wa{display:inline-flex;align-items:center;gap:.6rem;padding:.7rem 1.5rem;background:#25D366;color:#fff;font-weight:600;font-size:.875rem;border-radius:2px;margin-bottom:2rem;transition:background var(--transition),transform var(--transition)}
+      .contact-wa:hover{background:#1ebe5a;transform:translateY(-1px)}
+      .contact-boutiques-title{font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--em-gray-500);margin-bottom:.875rem;border-top:1px solid var(--em-gray-200);padding-top:1.25rem}
+      .contact-boutique{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.875rem;font-size:.85rem;color:var(--em-gray-700)}
+      .contact-boutique .ico{color:var(--em-green-600);margin-top:2px}
+      .contact-boutique-addr{display:block;font-size:.78rem;color:var(--em-gray-500);margin-top:.15rem}
+      .contact-form-wrap{background:#fff;border-radius:4px;box-shadow:0 4px 24px rgba(0,0,0,.07);padding:2.5rem}
+      .contact-form-title{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--em-green-900);margin-bottom:2rem}
+      .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+      .form-field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem}
+      .form-field label{font-size:.8rem;font-weight:600;color:var(--em-gray-700)}
+      .form-field input,.form-field select,.form-field textarea{padding:.75rem 1rem;border:1.5px solid var(--em-gray-200);border-radius:3px;font-family:var(--font-body);font-size:.9rem;color:var(--em-gray-900);outline:none;resize:vertical;transition:border-color var(--transition),box-shadow var(--transition)}
+      .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--em-green-600);box-shadow:0 0 0 3px rgba(5,150,105,.12)}
+      .form-submit{width:100%;justify-content:center;padding:1rem;font-size:.95rem;margin-top:.5rem}
+      @media(max-width:860px){.contact-body{grid-template-columns:1fr}.contact-form-wrap{padding:1.75rem}}
+      @media(max-width:560px){.form-row{grid-template-columns:1fr}}
+
+      /* ADMIN */
+      .admin-login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--em-green-900) 0%,var(--em-green-700) 100%);padding:2rem}
+      .admin-login-card{background:#fff;border-radius:8px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}
+      .admin-login-logo{width:56px;height:56px;background:var(--em-green-600);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:26px}
+      .admin-login-title{font-family:var(--font-display);font-size:1.6rem;color:var(--em-green-900);margin-bottom:.25rem}
+      .admin-login-sub{font-size:.82rem;color:var(--em-gray-500);letter-spacing:.05em;margin-bottom:2rem}
+      .admin-login-form{text-align:left}
+      .admin-err{display:flex;align-items:center;gap:.5rem;background:#FEF2F2;color:#EF4444;padding:.6rem .875rem;border-radius:4px;font-size:.82rem;margin-bottom:1rem}
+      .admin-form-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+      .admin-form-field label{font-size:.78rem;font-weight:600;color:var(--em-gray-700)}
+      .admin-form-field input,.admin-form-field select,.admin-form-field textarea{padding:.65rem .875rem;border:1.5px solid var(--em-gray-200);border-radius:4px;font-family:var(--font-body);font-size:.875rem;color:var(--em-gray-900);outline:none;transition:border-color var(--transition);resize:vertical}
+      .admin-form-field input:focus,.admin-form-field select:focus,.admin-form-field textarea:focus{border-color:var(--em-green-600);box-shadow:0 0 0 3px rgba(5,150,105,.1)}
+      .admin-login-btn{width:100%;padding:.875rem;background:var(--em-green-600);color:#fff;font-weight:600;font-size:.9rem;border:none;border-radius:4px;cursor:pointer;font-family:var(--font-body);transition:background var(--transition)}
+      .admin-login-btn:hover{background:var(--em-green-700)}
+      .admin-shell{display:flex;min-height:100vh;background:var(--em-gray-50)}
+      .admin-sidebar{width:220px;background:var(--em-green-900);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
+      .admin-sidebar-logo{display:flex;align-items:center;gap:.75rem;padding:1.5rem 1.25rem;font-family:var(--font-display);font-size:1.1rem;color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+      .admin-sidebar-logo-icon{width:34px;height:34px;background:var(--em-green-600);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+      .admin-nav{flex:1;display:flex;flex-direction:column;padding:1rem 0;gap:2px}
+      .admin-nav-link{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.25rem;color:rgba(255,255,255,.65);font-size:.875rem;font-weight:500;font-family:var(--font-body);background:none;border:none;cursor:pointer;transition:background var(--transition),color var(--transition);width:100%;text-align:left}
+      .admin-nav-link:hover{background:rgba(255,255,255,.07);color:#fff}
+      .admin-nav-link.active{background:var(--em-green-600);color:#fff}
+      .admin-logout{display:flex;align-items:center;gap:.6rem;padding:1rem 1.25rem;color:rgba(255,255,255,.5);font-size:.82rem;font-family:var(--font-body);background:none;border:none;border-top:1px solid rgba(255,255,255,.08);cursor:pointer;transition:color var(--transition)}
+      .admin-logout:hover{color:#EF4444}
+      .admin-main{margin-left:220px;flex:1;display:flex;flex-direction:column}
+      .admin-topbar{background:#fff;border-bottom:1px solid var(--em-gray-200);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+      .admin-topbar-title{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--em-green-900)}
+      .admin-topbar-user{display:flex;align-items:center;gap:.6rem;font-size:.82rem;color:var(--em-gray-700)}
+      .admin-topbar-avatar{width:32px;height:32px;background:var(--em-green-600);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem}
+      .admin-content{flex:1;padding:2rem}
+      .admin-section{display:flex;flex-direction:column;gap:1.5rem}
+      .admin-section-title{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--em-green-900)}
+      .admin-card{background:#fff;border-radius:6px;padding:1.75rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+      .admin-card-title{font-size:1rem;font-weight:700;color:var(--em-green-900);margin-bottom:1.25rem}
+      .admin-card-hint{font-size:.82rem;color:var(--em-gray-500);margin-top:-.75rem;margin-bottom:1.25rem}
+      .admin-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+      .admin-form-actions{display:flex;justify-content:flex-end;gap:.75rem;margin-top:.5rem}
+      .admin-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.25rem;font-family:var(--font-body);font-size:.85rem;font-weight:600;border-radius:4px;border:none;cursor:pointer;transition:all var(--transition)}
+      .admin-btn-primary{background:var(--em-green-600);color:#fff}
+      .admin-btn-primary:hover{background:var(--em-green-700)}
+      .admin-btn-primary:disabled{opacity:.6;cursor:not-allowed}
+      .admin-btn-ghost{background:transparent;color:var(--em-gray-700);border:1.5px solid var(--em-gray-200)}
+      .admin-btn-ghost:hover{background:var(--em-gray-100)}
+      .admin-btn-danger{background:#EF4444;color:#fff}
+      .admin-btn-danger:hover{background:#DC2626}
+      .admin-icon-btn{width:32px;height:32px;border:none;background:var(--em-gray-100);color:var(--em-gray-700);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--transition);font-family:var(--font-body);font-size:14px}
+      .admin-icon-btn:hover{background:var(--em-green-100);color:var(--em-green-700)}
+      .admin-icon-btn-danger:hover{background:#FEE2E2;color:#EF4444}
+      .admin-table-wrap{background:#fff;border-radius:6px;box-shadow:0 1px 6px rgba(0,0,0,.07);overflow:hidden}
+      .admin-table{width:100%;border-collapse:collapse;font-size:.875rem}
+      .admin-table thead tr{background:var(--em-gray-50);border-bottom:1.5px solid var(--em-gray-200)}
+      .admin-table th{text-align:left;padding:.875rem 1.25rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--em-gray-500)}
+      .admin-table td{padding:1rem 1.25rem;border-bottom:1px solid var(--em-gray-100);color:var(--em-gray-700);vertical-align:middle}
+      .admin-table tr:last-child td{border-bottom:none}
+      .admin-table tr:hover td{background:var(--em-gray-50)}
+      .admin-table-actions{display:flex;gap:.4rem}
+      .abadge{display:inline-flex;align-items:center;justify-content:center;padding:.2rem .6rem;background:var(--em-green-100);color:var(--em-green-700);font-size:.72rem;font-weight:700;border-radius:20px}
+      .abadge-gray{background:var(--em-gray-100);color:var(--em-gray-500)}
+      .dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+      .dash-stat{background:#fff;border-radius:6px;padding:1.5rem;text-align:center;box-shadow:0 1px 6px rgba(0,0,0,.07);border-top:3px solid var(--clr);display:flex;flex-direction:column;gap:.25rem}
+      .dash-stat-val{font-family:var(--font-display);font-size:2.2rem;font-weight:700;color:var(--clr);line-height:1}
+      .dash-stat-label{font-size:.78rem;color:var(--em-gray-500);font-weight:500}
+      .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+      .dash-panel{background:#fff;border-radius:6px;padding:1.5rem;box-shadow:0 1px 6px rgba(0,0,0,.07)}
+      .dash-panel h3{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--em-gray-500);margin-bottom:1rem}
+      .dash-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+      .dash-list li{display:flex;align-items:center;gap:.6rem;font-size:.875rem;color:var(--em-gray-700)}
+      .dash-list li span{flex:1}
+      .dash-list li em{font-size:.75rem;color:var(--em-gray-500)}
+      .admin-file-drop{border:2px dashed var(--em-gray-200);border-radius:6px;padding:2rem;text-align:center;cursor:pointer;transition:border-color var(--transition),background var(--transition);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--em-gray-500)}
+      .admin-file-drop:hover{border-color:var(--em-green-500);background:var(--em-green-50);color:var(--em-green-700)}
+      .admin-file-drop p{font-weight:600;font-size:.9rem}
+      .admin-file-drop span{font-size:.78rem}
+      .file-preview{position:relative;width:100%}
+      .file-preview img{width:100%;max-height:200px;object-fit:contain;border-radius:4px}
+      .file-clear{position:absolute;top:.5rem;right:.5rem;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
+      .admin-photos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+      .admin-photo-card{position:relative;border-radius:4px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.1)}
+      .admin-photo-card-img{position:relative;aspect-ratio:4/3}
+      .admin-photo-card-img img{width:100%;height:100%;object-fit:cover}
+      .admin-photo-type{position:absolute;top:.4rem;left:.4rem;background:var(--em-green-600);color:#fff;font-size:.6rem;font-weight:700;padding:.15rem .4rem;border-radius:2px;text-transform:uppercase}
+      .admin-photo-cap{padding:.5rem .6rem .6rem;font-size:.75rem;color:var(--em-gray-700);background:#fff;min-height:36px}
+      .admin-photo-del{position:absolute;top:.4rem;right:.4rem;width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,.9);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--transition);font-size:13px}
+      .admin-photo-card:hover .admin-photo-del{opacity:1}
+      .admin-empty{text-align:center;color:var(--em-gray-500);font-size:.9rem;padding:3rem}
+      .confirm-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
+      .confirm-box{background:#fff;border-radius:8px;padding:2rem;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);display:flex;flex-direction:column;align-items:center;gap:1rem}
+      .confirm-box p{font-size:.95rem;color:var(--em-gray-700);line-height:1.5}
+      .confirm-actions{display:flex;gap:.75rem;justify-content:center;width:100%}
+      @media(max-width:900px){.admin-sidebar{width:60px}.admin-sidebar-logo span,.admin-nav-link-text,.admin-logout span{display:none}.admin-main{margin-left:60px}.dash-stats{grid-template-columns:1fr 1fr}.dash-grid{grid-template-columns:1fr}.admin-photos-grid{grid-template-columns:repeat(2,1fr)}}
+
+      [data-page]{display:none}
+      [data-page].active{display:block}
+      .admin-section{display:none}
+      .admin-section.active{display:flex;flex-direction:column;gap:1.5rem}
+      .flex-between{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+      .text-center{text-align:center;margin-bottom:3rem}
+    </style>
+  </head>
+  <body>
+
+    <header class="navbar glass" id="navbar">
+      <div class="navbar-inner container">
+        <a href="#" class="nav-logo" onclick="showPage('home')">
+          <div class="nav-logo-icon">👁</div>
+          <div><span class="nav-logo-main">Éméraude</span><span class="nav-logo-sub">OPTIQUE</span></div>
+        </a>
+        <nav class="nav-links">
+          <a class="nav-link active" href="#" onclick="showPage('home');return false;">Accueil</a>
+          <a class="nav-link" href="#" onclick="showPage('catalogue');return false;">Catalogue</a>
+          <a class="nav-link" href="#" onclick="showPage('apropos');return false;">À propos</a>
+          <a class="nav-link" href="#" onclick="showPage('contact');return false;">Contact</a>
+        </nav>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="nav-cta" onclick="showPage('contact')">Prendre RDV</button>
+          <button class="nav-burger" id="burger" onclick="toggleMenu()">☰</button>
+        </div>
+      </div>
+      <div class="nav-mobile" id="mobile-menu">
+        <a href="#" onclick="showPage('home');toggleMenu();return false;">Accueil</a>
+        <a href="#" onclick="showPage('catalogue');toggleMenu();return false;">Catalogue</a>
+        <a href="#" onclick="showPage('apropos');toggleMenu();return false;">À propos</a>
+        <a href="#" onclick="showPage('contact');toggleMenu();return false;">Contact</a>
+        <button class="nav-cta mob" onclick="showPage('contact');toggleMenu()">Prendre RDV</button>
+      </div>
+    </header>
+
+    <!-- ACCUEIL -->
+    <main data-page="home" class="active">
+      <section class="hero">
+        <div class="hero-bg">
+          <!-- IMAGE HERO = LUNETTES ÉLÉGANTES -->
+          <img src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=1800&q=90" alt="Éméraude Optique — Lunettes élégantes" />
+          <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content container">
+          <p class="hero-eyebrow">Votre opticien de confiance au Bénin</p>
+          <h1 class="hero-title">Voir le monde<br>avec <span class="hero-word" id="hero-word">élégance.</span></h1>
+          <p class="hero-desc">Éméraude Optique, 3 boutiques, Cotonou, Porto-Novo et Parakou.<br>Lunettes de vue, solaires, lentilles et accessoires de qualité.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" onclick="showPage('catalogue')">Voir le catalogue →</button>
+            <button class="btn-outline" onclick="showPage('contact')">Nous contacter</button>
+          </div>
+        </div>
+        <div class="hero-badges">
+          <div class="hero-badge"><span style="color:var(--em-green-500)">📍</span> Cotonou — Sainte Rita</div>
+          <div class="hero-badge"><span style="color:var(--em-green-500)">📍</span> Porto-Novo — Avakpa</div>
+          <div class="hero-badge"><span style="color:var(--em-green-500)">📍</span> Parakou — Wanssirou</div>
+        </div>
+        <div class="hero-scroll"><div class="hero-scroll-line"></div><span>Découvrir</span></div>
+      </section>
+
+      <section class="stats">
+        <div class="stats-inner container">
+          <div class="stat"><span class="stat-val">3</span><span class="stat-label">Boutiques au Bénin</span></div>
+          <div class="stat"><span class="stat-val">5+</span><span class="stat-label">Années d'expérience</span></div>
+          <div class="stat"><span class="stat-val">1000+</span><span class="stat-label">Clients satisfaits</span></div>
+          <div class="stat"><span class="stat-val">500+</span><span class="stat-label">Modèles disponibles</span></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="flex-between">
+            <div><p class="section-sub">Nos collections</p><h2 class="section-title">Un catalogue pour chaque regard</h2></div>
+            <button class="btn-outline" style="border-color:var(--em-green-600);color:var(--em-green-600);" onclick="showPage('catalogue')">Tout voir →</button>
+          </div>
+          <div class="cat-grid" id="home-cat-grid"></div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="text-center">
+            <p class="section-sub">Nous trouver</p>
+            <h2 class="section-title">Nos 3 boutiques</h2>
+            <p style="color:var(--em-gray-500);max-width:520px;margin:1rem auto 0;line-height:1.7;">Éméraude Optique est présent dans trois grandes villes du Bénin.<br>Venez nous rendre visite, nos équipes vous accueillent avec le sourire.</p>
+          </div>
+          <div class="boutiques-grid" id="home-boutiques-grid"></div>
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <div class="container cta-banner-inner">
+          <div>
+            <h2 class="cta-banner-title">Prêt à choisir vos prochaines lunettes ?</h2>
+            <p class="cta-banner-sub">Prenez rendez-vous ou venez directement dans l'une de nos boutiques.</p>
+          </div>
+          <div class="cta-banner-actions">
+            <button class="btn-primary" onclick="showPage('contact')">Prendre rendez-vous →</button>
+            <a class="cta-link" href="#" onclick="showPage('catalogue');return false;">Voir le catalogue</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- CATALOGUE -->
+    <main data-page="catalogue">
+      <section class="section-hero-bg">
+        <div class="section-hero-bg-inner"></div>
+        <div class="container section-hero-bg-content">
+          <p class="section-sub section-sub-green">Nos collections</p>
+          <h1 class="section-title section-title-white">Catalogue Éméraude</h1>
+          <p style="color:rgba(255,255,255,.75);margin-top:.75rem;max-width:480px;">Explorez nos collections de lunettes de vue, solaires, lentilles et accessoires.</p>
+        </div>
+      </section>
+      <div class="cat-page-body container">
+        <aside class="cat-sidebar">
+          <p class="cat-sidebar-title">Catalogues</p>
+          <ul class="cat-tab-list" id="cat-tab-list"></ul>
+        </aside>
+        <div>
+          <div class="cat-main-header">
+            <div>
+              <h2 class="cat-main-title" id="cat-active-title"></h2>
+              <p class="cat-main-desc" id="cat-active-desc"></p>
+            </div>
+            <span class="cat-badge" id="cat-active-count">0 modèles</span>
+          </div>
+          <div class="photo-grid" id="cat-photo-grid"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- A PROPOS -->
+    <main data-page="apropos">
+      <section class="section-hero-bg">
+        <div class="section-hero-bg-inner"></div>
+        <div class="container section-hero-bg-content">
+          <p class="section-sub section-sub-green">Notre histoire</p>
+          <h1 class="section-title section-title-white">Qui sommes-nous ?</h1>
+          <p style="color:rgba(255,255,255,.75);margin-top:.75rem;max-width:480px;">Éméraude Optique, votre partenaire visuel au cœur du Bénin depuis plus d'une décennie.</p>
+        </div>
+      </section>
+      <section class="section">
+        <div class="container">
+          <div class="story-grid">
+            <div class="story-img-wrap">
+              <img src="https://images.unsplash.com/photo-1526738549149-8e07eca6c147?w=700&q=80" alt="Boutique" class="story-img" />
+              <div class="story-badge"><span class="story-badge-num">5+</span>années d'expertise</div>
+            </div>
+            <div>
+              <p class="section-sub">Notre histoire</p>
+              <h2 class="section-title">Nés de la passion<br>pour la vision</h2>
+              <p class="story-desc">Éméraude Optique est née de la conviction qu'une bonne vision est un droit fondamental, pas un luxe. Fondée à Cotonou, notre enseigne a grandi pour couvrir les trois principales villes du Bénin.</p>
+              <p class="story-desc">Notre équipe d'opticiens qualifiés vous guide à chaque étape : examen de vue, conseil personnalisé, choix de monture et suivi après-vente.</p>
+              <button class="btn-primary" style="margin-top:1.5rem;" onclick="showPage('contact')">Prendre rendez-vous →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section section-alt">
+        <div class="container">
+          <div class="text-center">
+            <p class="section-sub">Ce qui nous guide</p>
+            <h2 class="section-title">Nos valeurs</h2>
+          </div>
+          <div class="valeurs-grid">
+            <div class="valeur-card"><div class="valeur-icon">👁</div><h3 class="valeur-title">Expertise</h3><p class="valeur-desc">Plus de 5 ans d'expérience dans l'optique au Bénin, avec des opticiens diplômés et formés aux dernières techniques.</p></div>
+            <div class="valeur-card"><div class="valeur-icon">🏆</div><h3 class="valeur-title">Qualité</h3><p class="valeur-desc">Nous sélectionnons rigoureusement nos montures et verres parmi les meilleures marques internationales.</p></div>
+            <div class="valeur-card"><div class="valeur-icon">🤝</div><h3 class="valeur-title">Service</h3><p class="valeur-desc">Un accompagnement personnalisé pour chaque client, de l'examen de vue au choix de la monture idéale.</p></div>
+            <div class="valeur-card"><div class="valeur-icon">❤️</div><h3 class="valeur-title">Confiance</h3><p class="valeur-desc">Nous construisons une relation durable fondée sur la transparence et le respect, avec chaque client.</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- CONTACT -->
+    <main data-page="contact">
+      <section class="section-hero-bg">
+        <div class="section-hero-bg-inner"></div>
+        <div class="container section-hero-bg-content">
+          <p class="section-sub section-sub-green">Nous écrire</p>
+          <h1 class="section-title section-title-white">Contactez-nous</h1>
+          <p style="color:rgba(255,255,255,.75);margin-top:.75rem;max-width:480px;">Une question, un rendez-vous, un conseil ? Nous sommes là pour vous aider.</p>
+        </div>
+      </section>
+      <div class="contact-body container">
+        <div>
+          <h2 class="contact-info-title">Nos coordonnées</h2>
+          <div class="contact-items">
+            <div class="contact-item"><div class="contact-item-icon">📞</div><div><p class="contact-item-label">Téléphone</p><p class="contact-item-value">+229 01 61 98 53 54</p></div></div>
+            <div class="contact-item"><div class="contact-item-icon">✉</div><div><p class="contact-item-label">Email</p><p class="contact-item-value">emeraudeoptiqueas@gmail.com</p></div></div>
+            <div class="contact-item"><div class="contact-item-icon">🕐</div><div><p class="contact-item-label">Horaires</p><p class="contact-item-value">Lun – Ven : 8h00 – 19h00</p><p class="contact-item-value">Sam: 9h00 – 13h00</p></div></div>
+          </div>
+          <a href="https://wa.me/2290161985354" target="_blank" class="contact-wa">💬 Écrire sur WhatsApp</a>
+          <p class="contact-boutiques-title">Nos boutiques</p>
+          <div class="contact-boutique"><span class="ico">📍</span><div><strong>Cotonou</strong> — Sainte Rita<span class="contact-boutique-addr">Rue Station Ewell, Sainte Rita</span></div></div>
+          <div class="contact-boutique"><span class="ico">📍</span><div><strong>Porto-Novo</strong> — Avakpa<span class="contact-boutique-addr">Quartier Avakpa, Porto-Novo</span></div></div>
+          <div class="contact-boutique"><span class="ico">📍</span><div><strong>Parakou</strong> — Wanssirou<span class="contact-boutique-addr">Quartier Wanssirou, Parakou</span></div></div>
+        </div>
+        <div class="contact-form-wrap">
+          <h2 class="contact-form-title">Envoyer un message</h2>
+          <div id="form-success" style="display:none;text-align:center;padding:4rem 2rem;">
+            <div style="font-size:52px;margin-bottom:1rem;">✅</div>
+            <h3 style="font-family:var(--font-display);font-size:1.6rem;color:var(--em-green-900);margin-bottom:.75rem;">Message envoyé !</h3>
+            <p style="color:var(--em-gray-500);max-width:340px;margin:0 auto 1.5rem;line-height:1.7;">Merci de nous avoir contactés. Notre équipe vous répondra dans les plus brefs délais.</p>
+            <button class="btn-primary" onclick="document.getElementById('form-success').style.display='none';document.getElementById('contact-form').style.display='block'">Envoyer un autre message</button>
+          </div>
+          <form id="contact-form" onsubmit="submitForm(event)">
+            <div class="form-row">
+              <div class="form-field"><label>Nom complet *</label><input type="text" required placeholder="Votre nom et prénom" /></div>
+              <div class="form-field"><label>Email *</label><input type="email" required placeholder="votre@email.com" /></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label>Téléphone</label><input type="tel" placeholder="+229 ..." /></div>
+              <div class="form-field"><label>Boutique</label><select><option value="">Toutes les boutiques</option><option>Cotonou — Sainte Rita</option><option>Porto-Novo — Avakpa</option><option>Parakou — Wanssirou</option></select></div>
+            </div>
+            <div class="form-field"><label>Sujet *</label><input type="text" required placeholder="Objet de votre message" /></div>
+            <div class="form-field"><label>Message *</label><textarea required rows="5" placeholder="Décrivez votre demande en détail…"></textarea></div>
+            <button type="submit" class="btn-primary form-submit" id="form-btn">📨 Envoyer le message</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- ADMIN -->
+    <main data-page="admin">
+      <div id="admin-login-view" class="admin-login-page">
+        <div class="admin-login-card">
+          <div class="admin-login-logo">👁</div>
+          <h1 class="admin-login-title">Espace Admin</h1>
+          <p class="admin-login-sub">Éméraude Optique</p>
+          <div class="admin-login-form">
+            <div id="admin-err" class="admin-err" style="display:none;">⚠ Identifiants incorrects.</div>
+            <div class="admin-form-field"><label>Identifiant</label><input id="admin-user" type="text" placeholder="admin" /></div>
+            <div class="admin-form-field"><label>Mot de passe</label><input id="admin-pwd" type="password" placeholder="••••••••" /></div>
+            <button class="admin-login-btn" onclick="adminLogin()">Se connecter</button>
+          </div>
+        </div>
+      </div>
+      <div id="admin-shell" class="admin-shell" style="display:none;">
+        <aside class="admin-sidebar">
+          <div class="admin-sidebar-logo"><div class="admin-sidebar-logo-icon">👁</div><span>Admin</span></div>
+          <nav class="admin-nav">
+            <button class="admin-nav-link active" onclick="adminNav('dashboard',this)">📊 <span class="admin-nav-link-text">Tableau de bord</span></button>
+            <button class="admin-nav-link" onclick="adminNav('catalogues',this)">📁 <span class="admin-nav-link-text">Catalogues</span></button>
+            <button class="admin-nav-link" onclick="adminNav('photos',this)">🖼 <span class="admin-nav-link-text">Photos</span></button>
+            <button class="admin-nav-link" onclick="adminNav('videos',this)">🎬 <span class="admin-nav-link-text">Vidéos</span></button>
+          </nav>
+          <button class="admin-logout" onclick="adminLogout()">🚪 <span>Déconnexion</span></button>
+        </aside>
+        <div class="admin-main">
+          <div class="admin-topbar">
+            <h1 class="admin-topbar-title" id="admin-topbar-title">Tableau de bord</h1>
+            <div class="admin-topbar-user"><div class="admin-topbar-avatar">A</div><span>Administrateur</span></div>
+          </div>
+          <div class="admin-content">
+            <div id="admin-dashboard" class="admin-section active">
+              <h2 class="admin-section-title">Tableau de bord</h2>
+              <div class="dash-stats" id="dash-stats"></div>
+              <div class="dash-grid">
+                <div class="dash-panel"><h3>Catalogues</h3><ul class="dash-list" id="dash-cats"></ul></div>
+                <div class="dash-panel"><h3>Vidéos</h3><ul class="dash-list" id="dash-vids"></ul></div>
+              </div>
+            </div>
+            <div id="admin-catalogues" class="admin-section">
+              <h2 class="admin-section-title">Gestion des catalogues</h2>
+              <div class="admin-card">
+                <h3 class="admin-card-title" id="cat-form-title">Créer un catalogue</h3>
+                <div class="admin-form-field"><label>Nom du catalogue *</label><input id="cat-nom" type="text" placeholder="Ex : Lunettes Soleil" /></div>
+                <div class="admin-form-field"><label>Texte de bas de catalogue</label><textarea id="cat-desc" rows="3" placeholder="Description affichée en bas du catalogue…"></textarea></div>
+                <div class="admin-form-actions">
+                  <button class="admin-btn admin-btn-ghost" id="cat-cancel-btn" style="display:none" onclick="cancelCatEdit()">Annuler</button>
+                  <button class="admin-btn admin-btn-primary" onclick="saveCat()">✔ Enregistrer</button>
+                </div>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead><tr><th>Catalogue</th><th>Texte bas de page</th><th>Photos</th><th>Actions</th></tr></thead>
+                  <tbody id="cat-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+            <div id="admin-photos" class="admin-section">
+              <h2 class="admin-section-title">Gestion des photos</h2>
+              <div class="admin-card">
+                <h3 class="admin-card-title">Importer une photo</h3>
+                <div class="admin-form-row">
+                  <div class="admin-form-field"><label>Catalogue *</label><select id="photo-cat-select"></select></div>
+                  <div class="admin-form-field"><label>Type de lunette *</label><select id="photo-type-select"><option>Vue</option><option>Soleil</option><option>Lentille</option><option>Accessoire</option></select></div>
+                </div>
+                <div class="admin-form-field"><label>Texte accompagnant la photo</label><input id="photo-texte" type="text" placeholder="Description de la photo…" /></div>
+                <div class="admin-form-field">
+                  <label>Fichier image *</label>
+                  <div class="admin-file-drop" id="photo-drop" onclick="document.getElementById('photo-file').click()">
+                    <div id="photo-drop-content"><p style="font-size:28px;margin-bottom:.5rem;">📷</p><p>Cliquer pour choisir une image</p><span>JPG, PNG, WEBP — max 5 Mo</span></div>
+                  </div>
+                  <input id="photo-file" type="file" accept="image/*" style="display:none" onchange="handlePhotoFile(event)" />
+                </div>
+                <div class="admin-form-actions">
+                  <button class="admin-btn admin-btn-primary" id="photo-import-btn" disabled onclick="importPhoto()">⬆ Importer la photo</button>
+                </div>
+              </div>
+              <div class="admin-card">
+                <h3 class="admin-card-title">Photos du catalogue</h3>
+                <div class="admin-form-field" style="max-width:300px;margin-bottom:1.5rem;"><label>Filtrer par catalogue</label><select id="photo-filter-select" onchange="renderPhotoGallery()"></select></div>
+                <div class="admin-photos-grid" id="photo-gallery"></div>
+              </div>
+            </div>
+            <div id="admin-videos" class="admin-section">
+              <h2 class="admin-section-title">Gestion des vidéos</h2>
+              <div class="admin-card">
+                <h3 class="admin-card-title">Importer une vidéo</h3>
+                <p class="admin-card-hint">Les vidéos importées s'affichent à l'accueil et se jouent les unes après les autres.</p>
+                <div class="admin-form-field"><label>Titre de la vidéo *</label><input id="vid-titre" type="text" placeholder="Titre de la vidéo…" /></div>
+                <div class="admin-form-field">
+                  <label>Fichier vidéo *</label>
+                  <div class="admin-file-drop" id="vid-drop" onclick="document.getElementById('vid-file').click()">
+                    <div id="vid-drop-content"><p style="font-size:28px;margin-bottom:.5rem;">🎬</p><p>Cliquer pour choisir une vidéo</p><span>MP4, WebM — max 100 Mo</span></div>
+                  </div>
+                  <input id="vid-file" type="file" accept="video/*" style="display:none" onchange="handleVidFile(event)" />
+                </div>
+                <div class="admin-form-actions">
+                  <button class="admin-btn admin-btn-primary" id="vid-import-btn" disabled onclick="importVid()">⬆ Importer la vidéo</button>
+                </div>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead><tr><th>Titre</th><th>Statut accueil</th><th>Actions</th></tr></thead>
+                  <tbody id="vid-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER GLOBAL — visible sur toutes les pages sauf admin -->
+    <footer class="footer" id="site-footer">
+      <div class="footer-top container">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="footer-logo-icon">👁</div>
+            <div><span class="footer-logo-main">Éméraude Optique</span><span class="footer-logo-sub">Voir le monde autrement</span></div>
+          </div>
+          <p class="footer-tagline">Votre opticien de confiance au Bénin depuis plus de 5 ans. Qualité, expertise et service personnalisé dans 3 boutiques.</p>
+          <a href="https://wa.me/2290161985354" target="_blank" class="footer-wa">💬 WhatsApp</a>
+        </div>
+        <div>
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#" onclick="showPage('home');return false;">Accueil</a></li>
+            <li><a href="#" onclick="showPage('catalogue');return false;">Catalogue</a></li>
+            <li><a href="#" onclick="showPage('apropos');return false;">À propos</a></li>
+            <li><a href="#" onclick="showPage('contact');return false;">Contact</a></li>
+            <li><a href="#" onclick="showPage('admin');return false;">Espace Admin</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-heading">Nos boutiques</h4>
+          <ul class="footer-locs">
+            <li><span class="ico">📍</span><span><strong>Cotonou</strong> — Sainte Rita</span></li>
+            <li><span class="ico">📍</span><span><strong>Porto-Novo</strong> — Avakpa</span></li>
+            <li><span class="ico">📍</span><span><strong>Parakou</strong> — Wanssirou</span></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-heading">Contact</h4>
+          <ul class="footer-contacts">
+            <li><span class="ico">📞</span><a href="tel:+2290161985354">+229 01 61 98 53 54</a></li>
+            <li><span class="ico">✉</span><a href="mailto:emeraudeoptiqueas@gmail.com">emeraudeoptiqueas@gmail.com</a></li>
+          </ul>
+          <p class="footer-hours">Lun – Ven : 8h00 – 19h00</p>
+          <p class="footer-hours">Sam: 9h00 – 13h00</p>
+        </div>
+      </div>
+      <div class="footer-bottom container">
+        <p>© 2026 Éméraude Optique — Tous droits réservés</p>
+        <p>Conçu par <i>Freud HOUINATO Tel:+2290168014145</i></p>
+      </div>
+    </footer>
+
+    <div id="lightbox" class="lightbox" style="display:none" onclick="closeLightbox()">
+      <button class="lb-close" onclick="closeLightbox()">✕</button>
+      <div class="lb-inner" onclick="event.stopPropagation()">
+        <img id="lb-img" src="" alt="" />
+        <div class="lb-info"><span class="lb-type" id="lb-type"></span><p class="lb-caption" id="lb-caption"></p></div>
+      </div>
+    </div>
+
+    <div id="confirm-overlay" class="confirm-overlay" style="display:none">
+      <div class="confirm-box">
+        <div style="font-size:36px;">⚠️</div>
+        <p id="confirm-msg">Supprimer cet élément ?</p>
+        <div class="confirm-actions">
+          <button class="admin-btn admin-btn-ghost" onclick="closeConfirm()">Annuler</button>
+          <button class="admin-btn admin-btn-danger" onclick="execConfirm()">Supprimer</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+    const BOUTIQUES=[
+      {ville:'Cotonou',quartier:'Sainte Rita',adresse:'Rue Station Ewell, Sainte Rita',tel:'+229 01 61 98 53 54',img:'https://images.unsplash.com/photo-1604147706283-d7119b5b822c?w=600&q=80'},
+      {ville:'Porto-Novo',quartier:'Avakpa',adresse:'Quartier Avakpa, Porto-Novo',tel:'+229 01 61 98 53 54',img:'https://images.unsplash.com/photo-1577401239170-897942555fb3?w=600&q=80'},
+      {ville:'Parakou',quartier:'Wanssirou',adresse:'Quartier Wanssirou, Parakou',tel:'+229 01 61 98 53 54',img:'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?w=600&q=80'},
+    ]
+    let CATALOGUES=[
+      {id:1,nom:'Lunettes de Vue',description:'Notre sélection de montures pour corriger votre vision avec style.',photos:[
+        {id:1,src:'https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=500&q=80',texte:'Monture ronde dorée — élégance intemporelle',type:'Vue'},
+        {id:2,src:'https://images.unsplash.com/photo-1591076482161-42ce6da69f67?w=500&q=80',texte:'Monture acétate carrée — style contemporain',type:'Vue'},
+        {id:3,src:'https://images.unsplash.com/photo-1508296695146-257a814070b4?w=500&q=80',texte:'Monture légère titane — confort toute la journée',type:'Vue'},
+        {id:4,src:'https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?w=500&q=80',texte:'Collection jeunesse — couleurs vives',type:'Vue'},
+      ]},
+      {id:2,nom:'Lunettes Soleil',description:'Protection solaire et style à la fois. Verres polarisés, filtres UV400.',photos:[
+        {id:5,src:'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500&q=80',texte:'Aviateur polarisé — protection UV400',type:'Soleil'},
+        {id:6,src:'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80',texte:'Wayfarer moderne — look intemporel',type:'Soleil'},
+        {id:7,src:'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=500&q=80',texte:'Sport oversize — plein air et mer',type:'Soleil'},
+      ]},
+      {id:3,nom:'Lentilles',description:'Lentilles de contact quotidiennes, mensuelles et colorées.',photos:[
+        {id:8,src:'https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?w=500&q=80',texte:'Lentilles journalières — pratiques et hygiéniques',type:'Lentille'},
+        {id:9,src:'https://images.unsplash.com/photo-1559757175-7cb036e4d3ab?w=500&q=80',texte:'Lentilles colorées — changer de regard',type:'Lentille'},
+      ]},
+      {id:4,nom:'Accessoires',description:"Étuis, chiffons, solutions nettoyantes pour prendre soin de vos équipements.",photos:[
+        {id:10,src:'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500&q=80',texte:'Étuis premium — protection optimale',type:'Accessoire'},
+      ]},
+    ]
+    let VIDEOS=[{id:1,titre:'Bienvenue chez Éméraude Optique',src:'',visible:true}]
+    let activeCatId=1,confirmCb=null,vidPreviewSrc=null,photoPreviewData=null,editCatId=null
+
+    const heroWords=['élégance.','clarté.','style.','confiance.']
+    let wordIdx=0
+    setInterval(()=>{
+      wordIdx=(wordIdx+1)%heroWords.length
+      const el=document.getElementById('hero-word')
+      if(el){el.style.opacity=0;setTimeout(()=>{el.textContent=heroWords[wordIdx];el.style.opacity=1},250)}
+    },2200)
+
+    window.addEventListener('scroll',()=>{
+      const nb=document.getElementById('navbar');if(!nb)return
+      const isHome=document.querySelector('[data-page="home"]').classList.contains('active')
+      nb.className='navbar '+(window.scrollY>60||!isHome?'solid':'glass')
+    })
+
+    function showPage(name){
+      document.querySelectorAll('[data-page]').forEach(p=>p.classList.remove('active'))
+      document.querySelector('[data-page="'+name+'"]').classList.add('active')
+      document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'))
+      const map={home:0,catalogue:1,apropos:2,contact:3}
+      const links=document.querySelectorAll('.nav-link')
+      if(map[name]!==undefined)links[map[name]]?.classList.add('active')
+      window.scrollTo(0,0)
+      const nb=document.getElementById('navbar')
+      const ft=document.getElementById('site-footer')
+      nb.style.display=name==='admin'?'none':''
+      ft.style.display=name==='admin'?'none':''
+      nb.className='navbar '+(name==='home'?'glass':'solid')
+      if(name==='catalogue')renderCataloguePage()
+      if(name==='home'){renderHomeCats();renderHomeBoutiques()}
+      if(name==='admin'&&document.getElementById('admin-shell').style.display!=='none')renderDashboard()
+    }
+
+    function toggleMenu(){document.getElementById('mobile-menu').classList.toggle('open')}
+
+    function renderHomeCats(){
+      document.getElementById('home-cat-grid').innerHTML=CATALOGUES.map(c=>`
+        <div class="cat-card" onclick="showPage('catalogue');setActiveCat(${c.id})">
+          <div class="cat-card-img-wrap">
+            <img class="cat-card-img" src="${c.photos[0]?.src||''}" alt="${c.nom}" loading="lazy"/>
+            <div class="cat-card-overlay"></div>
+            <span class="cat-card-count">${c.photos.length} modèles</span>
+          </div>
+          <div class="cat-card-body">
+            <h3 class="cat-card-title">${c.nom}</h3>
+            <p class="cat-card-desc">${c.description.substring(0,80)}…</p>
+            <span class="cat-card-link">Voir la collection →</span>
+          </div>
+        </div>`).join('')
+    }
+
+    function renderHomeBoutiques(){
+      document.getElementById('home-boutiques-grid').innerHTML=BOUTIQUES.map(b=>`
+        <div class="boutique-card">
+          <div class="boutique-img-wrap"><img class="boutique-img" src="${b.img}" alt="${b.ville}" loading="lazy"/><span class="boutique-badge">${b.ville}</span></div>
+          <div class="boutique-body">
+            <h3 class="boutique-ville">${b.ville}</h3>
+            <p class="boutique-quartier">${b.quartier}</p>
+            <ul class="boutique-info">
+              <li><span>📍</span>${b.adresse}</li>
+              <li><span>📞</span>${b.tel}</li>
+              <li><span>🕐</span>Lun – Ven : 8h – 19h | Sam : 9h – 13h</li>
+            </ul>
+            <a href="https://wa.me/2290161985354?text=Bonjour, je souhaite un renseignement pour la boutique de ${b.ville}" target="_blank" class="boutique-cta">Contacter cette boutique</a>
+          </div>
+        </div>`).join('')
+    }
+
+    function setActiveCat(id){activeCatId=id;renderCataloguePage()}
+
+    function renderCataloguePage(){
+      document.getElementById('cat-tab-list').innerHTML=CATALOGUES.map(c=>`
+        <li><button class="cat-tab ${c.id===activeCatId?'active':''}" onclick="setActiveCat(${c.id})">
+          <span>${c.nom}</span><span class="tab-count">${c.photos.length}</span>
+        </button></li>`).join('')
+      const cat=CATALOGUES.find(c=>c.id===activeCatId);if(!cat)return
+      document.getElementById('cat-active-title').textContent=cat.nom
+      document.getElementById('cat-active-desc').textContent=cat.description
+      document.getElementById('cat-active-count').innerHTML='🔍 '+cat.photos.length+' modèles'
+      document.getElementById('cat-photo-grid').innerHTML=cat.photos.map(p=>`
+        <div class="photo-card" onclick="openLightbox('${p.src}','${p.type}','${p.texte}')">
+          <div class="photo-card-img-wrap">
+            <img class="photo-card-img" src="${p.src}" alt="${p.texte}" loading="lazy"/>
+            <div class="photo-overlay"><span style="color:white;font-size:22px;">🔍</span></div>
+            <span class="photo-type">${p.type}</span>
+          </div>
+          ${p.texte?`<p class="photo-caption">${p.texte}</p>`:''}
+        </div>`).join('')
+    }
+
+    function openLightbox(src,type,caption){
+      document.getElementById('lb-img').src=src
+      document.getElementById('lb-type').textContent=type
+      document.getElementById('lb-caption').textContent=caption
+      document.getElementById('lightbox').style.display='flex'
+      document.body.style.overflow='hidden'
+    }
+    function closeLightbox(){document.getElementById('lightbox').style.display='none';document.body.style.overflow=''}
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLightbox();closeConfirm()}})
+
+    function submitForm(e){
+      e.preventDefault()
+      const btn=document.getElementById('form-btn')
+      btn.textContent='⏳ Envoi en cours…';btn.disabled=true
+      setTimeout(()=>{
+        document.getElementById('contact-form').style.display='none'
+        document.getElementById('form-success').style.display='block'
+        btn.textContent='📨 Envoyer le message';btn.disabled=false
+      },1400)
+    }
+
+    function adminLogin(){
+      const u=document.getElementById('admin-user').value
+      const p=document.getElementById('admin-pwd').value
+      if(u==='admin'&&p==='emeraude2024'){
+        document.getElementById('admin-login-view').style.display='none'
+        document.getElementById('admin-shell').style.display='flex'
+        renderDashboard();renderCatSelects()
+      }else{document.getElementById('admin-err').style.display='flex'}
+    }
+    function adminLogout(){
+      document.getElementById('admin-shell').style.display='none'
+      document.getElementById('admin-login-view').style.display='flex'
+      document.getElementById('admin-user').value=''
+      document.getElementById('admin-pwd').value=''
+    }
+    function adminNav(section,btn){
+      document.querySelectorAll('.admin-nav-link').forEach(b=>b.classList.remove('active'))
+      btn.classList.add('active')
+      document.querySelectorAll('.admin-section').forEach(s=>s.classList.remove('active'))
+      document.getElementById('admin-'+section).classList.add('active')
+      const titles={dashboard:'Tableau de bord',catalogues:'Catalogues',photos:'Photos',videos:'Vidéos'}
+      document.getElementById('admin-topbar-title').textContent=titles[section]
+      if(section==='dashboard')renderDashboard()
+      if(section==='catalogues')renderCatTable()
+      if(section==='photos'){renderCatSelects();renderPhotoGallery()}
+      if(section==='videos')renderVidTable()
+    }
+    function renderDashboard(){
+      const totalPhotos=CATALOGUES.reduce((s,c)=>s+c.photos.length,0)
+      const sd=[
+        {label:'Catalogues',val:CATALOGUES.length,clr:'var(--em-green-600)'},
+        {label:'Photos',val:totalPhotos,clr:'var(--em-green-700)'},
+        {label:'Vidéos',val:VIDEOS.length,clr:'var(--em-green-800)'},
+        {label:'Vidéos actives',val:VIDEOS.filter(v=>v.visible).length,clr:'var(--em-green-500)'},
+      ]
+      document.getElementById('dash-stats').innerHTML=sd.map(s=>`<div class="dash-stat" style="--clr:${s.clr}"><span class="dash-stat-val">${s.val}</span><span class="dash-stat-label">${s.label}</span></div>`).join('')
+      document.getElementById('dash-cats').innerHTML=CATALOGUES.map(c=>`<li><span>📁</span><span>${c.nom}</span><em>${c.photos.length} photos</em></li>`).join('')
+      document.getElementById('dash-vids').innerHTML=VIDEOS.map(v=>`<li><span>🎬</span><span>${v.titre}</span><em style="color:${v.visible?'var(--em-green-600)':'var(--em-gray-500)'}">${v.visible?'Visible':'Masquée'}</em></li>`).join('')
+    }
+    function renderCatTable(){
+      document.getElementById('cat-table-body').innerHTML=CATALOGUES.map(c=>`
+        <tr>
+          <td><strong>${c.nom}</strong></td>
+          <td style="max-width:280px;font-size:.82rem;color:var(--em-gray-500)">${c.description||'—'}</td>
+          <td><span class="abadge">${c.photos.length}</span></td>
+          <td><div class="admin-table-actions">
+            <button class="admin-icon-btn" onclick="editCat(${c.id})" title="Modifier">✏</button>
+            <button class="admin-icon-btn admin-icon-btn-danger" onclick="askConfirm('Supprimer ce catalogue et toutes ses photos ?',()=>deleteCat(${c.id}))" title="Supprimer">🗑</button>
+          </div></td>
+        </tr>`).join('')
+    }
+    function saveCat(){
+      const nom=document.getElementById('cat-nom').value.trim()
+      const desc=document.getElementById('cat-desc').value.trim()
+      if(!nom)return
+      if(editCatId){CATALOGUES=CATALOGUES.map(c=>c.id===editCatId?{...c,nom,description:desc}:c);cancelCatEdit()}
+      else{CATALOGUES.push({id:Date.now(),nom,description:desc,photos:[]});document.getElementById('cat-nom').value='';document.getElementById('cat-desc').value=''}
+      renderCatTable();renderCatSelects()
+    }
+    function editCat(id){
+      const c=CATALOGUES.find(x=>x.id===id);editCatId=id
+      document.getElementById('cat-nom').value=c.nom
+      document.getElementById('cat-desc').value=c.description
+      document.getElementById('cat-form-title').textContent='Modifier le catalogue'
+      document.getElementById('cat-cancel-btn').style.display='inline-flex'
+    }
+    function cancelCatEdit(){
+      editCatId=null;document.getElementById('cat-nom').value='';document.getElementById('cat-desc').value=''
+      document.getElementById('cat-form-title').textContent='Créer un catalogue'
+      document.getElementById('cat-cancel-btn').style.display='none'
+    }
+    function deleteCat(id){CATALOGUES=CATALOGUES.filter(c=>c.id!==id);renderCatTable();renderCatSelects()}
+    function renderCatSelects(){
+      const opts=CATALOGUES.map(c=>`<option value="${c.id}">${c.nom}</option>`).join('')
+      document.getElementById('photo-cat-select').innerHTML=opts
+      document.getElementById('photo-filter-select').innerHTML=opts
+    }
+    function handlePhotoFile(e){
+      const file=e.target.files[0];if(!file)return
+      const reader=new FileReader()
+      reader.onload=ev=>{
+        photoPreviewData=ev.target.result
+        document.getElementById('photo-drop-content').innerHTML=`<div class="file-preview"><img src="${photoPreviewData}" alt="preview"/><button class="file-clear" onclick="clearPhoto(event)">✕</button></div>`
+        document.getElementById('photo-import-btn').disabled=false
+      }
+      reader.readAsDataURL(file)
+    }
+    function clearPhoto(e){e.stopPropagation();photoPreviewData=null;document.getElementById('photo-drop-content').innerHTML='<p style="font-size:28px;margin-bottom:.5rem;">📷</p><p>Cliquer pour choisir une image</p><span>JPG, PNG, WEBP — max 5 Mo</span>';document.getElementById('photo-import-btn').disabled=true;document.getElementById('photo-file').value=''}
+    function importPhoto(){
+      const catId=parseInt(document.getElementById('photo-cat-select').value)
+      const type=document.getElementById('photo-type-select').value
+      const texte=document.getElementById('photo-texte').value
+      if(!photoPreviewData)return
+      CATALOGUES=CATALOGUES.map(c=>c.id===catId?{...c,photos:[...c.photos,{id:Date.now(),src:photoPreviewData,texte,type}]}:c)
+      clearPhoto({stopPropagation:()=>{}});document.getElementById('photo-texte').value='';document.getElementById('photo-file').value=''
+      renderPhotoGallery()
+    }
+    function renderPhotoGallery(){
+      const catId=parseInt(document.getElementById('photo-filter-select').value)
+      const cat=CATALOGUES.find(c=>c.id===catId)
+      const g=document.getElementById('photo-gallery')
+      if(!cat||cat.photos.length===0){g.innerHTML='<p class="admin-empty">Aucune photo dans ce catalogue.</p>';return}
+      g.innerHTML=cat.photos.map(p=>`
+        <div class="admin-photo-card">
+          <div class="admin-photo-card-img"><img src="${p.src}" alt="${p.texte}"/><span class="admin-photo-type">${p.type}</span></div>
+          <p class="admin-photo-cap">${p.texte||'<em>Sans texte</em>'}</p>
+          <button class="admin-photo-del" onclick="askConfirm('Supprimer cette photo ?',()=>deletePhoto(${catId},${p.id}))">🗑</button>
+        </div>`).join('')
+    }
+    function deletePhoto(catId,photoId){CATALOGUES=CATALOGUES.map(c=>c.id===catId?{...c,photos:c.photos.filter(p=>p.id!==photoId)}:c);renderPhotoGallery()}
+    function handleVidFile(e){
+      const file=e.target.files[0];if(!file)return
+      vidPreviewSrc=URL.createObjectURL(file)
+      document.getElementById('vid-drop-content').innerHTML=`<div class="file-preview"><video src="${vidPreviewSrc}" controls style="width:100%;max-height:180px;border-radius:4px"></video><button class="file-clear" onclick="clearVid(event)">✕</button></div>`
+      document.getElementById('vid-import-btn').disabled=false
+    }
+    function clearVid(e){e&&e.stopPropagation();vidPreviewSrc=null;document.getElementById('vid-drop-content').innerHTML='<p style="font-size:28px;margin-bottom:.5rem;">🎬</p><p>Cliquer pour choisir une vidéo</p><span>MP4, WebM — max 100 Mo</span>';document.getElementById('vid-import-btn').disabled=true;document.getElementById('vid-file').value=''}
+    function importVid(){
+      const titre=document.getElementById('vid-titre').value.trim()
+      if(!titre||!vidPreviewSrc)return
+      VIDEOS.push({id:Date.now(),titre,src:vidPreviewSrc,visible:true})
+      document.getElementById('vid-titre').value='';clearVid(null);renderVidTable()
+    }
+    function renderVidTable(){
+      document.getElementById('vid-table-body').innerHTML=VIDEOS.map(v=>`
+        <tr>
+          <td><strong>${v.titre}</strong></td>
+          <td><span class="abadge ${v.visible?'':'abadge-gray'}">${v.visible?'Visible':'Masquée'}</span></td>
+          <td><div class="admin-table-actions">
+            <button class="admin-icon-btn" onclick="toggleVid(${v.id})" title="${v.visible?'Retirer':'Afficher'}">${v.visible?'🙈':'👁'}</button>
+            <button class="admin-icon-btn admin-icon-btn-danger" onclick="askConfirm('Supprimer cette vidéo ?',()=>deleteVid(${v.id}))" title="Supprimer">🗑</button>
+          </div></td>
+        </tr>`).join('')
+    }
+    function toggleVid(id){VIDEOS=VIDEOS.map(v=>v.id===id?{...v,visible:!v.visible}:v);renderVidTable()}
+    function deleteVid(id){VIDEOS=VIDEOS.filter(v=>v.id!==id);renderVidTable()}
+    function askConfirm(msg,cb){confirmCb=cb;document.getElementById('confirm-msg').textContent=msg;document.getElementById('confirm-overlay').style.display='flex'}
+    function closeConfirm(){document.getElementById('confirm-overlay').style.display='none';confirmCb=null}
+    function execConfirm(){if(confirmCb)confirmCb();closeConfirm()}
+    renderHomeCats();renderHomeBoutiques()
+
+    // Gestion images cassées — placeholder émeraude
+    document.addEventListener('error', function(e){
+      const img = e.target
+      if(img.tagName !== 'IMG') return
+      if(img.dataset.errored) return
+      img.dataset.errored = '1'
+      const wrap = img.parentElement
+      if(!wrap) return
+      // On crée un placeholder dans le conteneur parent
+      const ph = document.createElement('div')
+      ph.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#ECFDF5,#D1FAE5);color:#059669;gap:.5rem;font-size:.75rem;font-family:Inter,sans-serif;font-weight:500;'
+      ph.innerHTML = '<span style="font-size:2rem">👓</span><span>Image à venir</span>'
+      if(getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative'
+      img.style.opacity = '0'
+      wrap.appendChild(ph)
+    }, true)
+    </script>
+  </body>
+</html>
